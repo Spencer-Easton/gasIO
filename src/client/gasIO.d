@@ -287,7 +287,7 @@ void PUSH(){
 
 	params ~= to!string(newFile);             //Param 4
 
-	JSONValue postData =  ["function":"PUSH", "devMode":"true"];
+	JSONValue postData =  ["function":"PUSH", "devMode":"false"];
 	
 	postData.object["parameters"] = params;
 
@@ -332,7 +332,7 @@ void GET(){
 		params ~= "null";
 	}
 
-	JSONValue postData =  ["function":"GET", "devMode":"true"];
+	JSONValue postData =  ["function":"GET", "devMode":"false"];
 	
 	postData.object["parameters"] = params;
 	auto http = HTTP(fetchUrl);	
