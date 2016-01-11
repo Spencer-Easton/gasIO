@@ -106,8 +106,8 @@ void removeConfigFile(){
 }
 
 string loadConfigFile(){
-    string cId = "402007435673-9csca56cp695iqes48rgubktp1o0eq63.apps.googleusercontent.com";
-	string cSecret = "Id3fezbJOIjH8OhbHFSAoqnQ"; // Go ahead and use these Auth creds. Can't guarantee if many people are useing them the free quota won't run out. 
+    string cId = "402007435673-9csca56cp695iqes48rgubktp1o0eq63.apps.googleusercontent.com"; //TODO clientID
+	string cSecret = "Id3fezbJOIjH8OhbHFSAoqnQ"; //TODO clientSecret Go ahead and use these Auth creds. Can't guarantee if many people are useing them the free quota won't run out. 
 	string redirect_uri = "urn:ietf:wg:oauth:2.0:oob";	// Web Auth
 	string authUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 	string scopes = "https://www.googleapis.com/auth/drive.apps.readonly https://www.googleapis.com/auth/script.external_request https://www.googleapis.com/auth/drive.scripts https://www.googleapis.com/auth/drive"; 
@@ -271,7 +271,7 @@ void PUSH(){
 
 	writeln("Saving Script...");
 
-    string cApi_Id = "MA9m6em62bf-mLIJKvQgTekMLm9v2IJHf";	
+    string cApi_Id = "MA9m6em62bf-mLIJKvQgTekMLm9v2IJHf"; //TODO execution API ID	
 	string fetchUrl = "https://script.googleapis.com/v1/scripts/"~ cApi_Id ~":run";
 
 	string[] params = [scriptFileName];      //Param 1
@@ -322,7 +322,7 @@ void GET(){
 	string oAuthToken = loadConfigFile();
 	writeln("Getting Script...");
 
-    string cApi_Id = "MA9m6em62bf-mLIJKvQgTekMLm9v2IJHf";	
+    string cApi_Id = "MA9m6em62bf-mLIJKvQgTekMLm9v2IJHf"; //TODO execution API ID	
 	string fetchUrl = "https://script.googleapis.com/v1/scripts/"~ cApi_Id ~":run";
 
 	string[] params = [scriptFileName];
