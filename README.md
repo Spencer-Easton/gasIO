@@ -18,6 +18,7 @@ gasIO options
 -a       --addExt Add extension to the list of defaults: gs, html, js, css. You can add as many as you need.  
 -p         --push Push the current directory to a script in Drive  
 -g          --get Fetches a script and saves it locally  
+-s   --syncHeader Resyncs .scriptInfo with the script project.  
 -t  --clearTokens Deletes all stored OAuth tokens  
 -h         --help This help information.  
   

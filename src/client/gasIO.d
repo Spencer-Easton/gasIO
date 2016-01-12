@@ -50,6 +50,7 @@ int main(string[] args){
 									  "addExt|a","Add extension to the list of defaults: gs, html, js, css. You can add as many as you need.",&addExtensions,
 									  "push|p","Push the current directory to a script in Drive",&PUSH,									  
 									  "get|g","Fetches a script and saves it locally",&GET,
+									  "syncHeader|s","Resyncs "~scriptInfoName ~" with the script project.",&GETHEADERS,
 									  "clearTokens|t","Deletes all stored OAuth tokens",&removeConfigFile);
 		if (cmdOptions.helpWanted){
 			defaultGetoptPrinter("\ngasIO options",
@@ -198,7 +199,7 @@ string getOAToken(string postData, char[] fileName, string refreshToken){ //pass
 JSONValue makeFilesObject(){
    
    //build the string of file extensions to add
-   string searchExtensions = "{";
+   string searchExtensions = "{[!.git]";
    foreach(ext; defaultExtensions){
    		searchExtensions ~= "," ~ ext;
     }
@@ -209,7 +210,7 @@ JSONValue makeFilesObject(){
    
    
    auto recurseMode = (recursive)?SpanMode.breadth:SpanMode.shallow;
-   auto dirFiles = dirEntries("./",searchExtensions,recurseMode); //directory files
+   auto dirFiles = dirEntries("./",searchExtensions,recurseMode);//directory files 
    
    string[string][] filesArray; // Array to hold the fileObjs
    foreach(file; dirFiles){
@@ -317,6 +318,8 @@ void PUSH(){
  }
 
 
+
+
 // get files from an Apps Script
 void GET(){
 	bool overWriteAll = false;
@@ -389,3 +392,62 @@ void GET(){
 			}
 		}
 }
+
+
+//get headers
+void GETHEADERS(){
+	bool overWriteAll = false;
+	string oAuthToken = loadConfigFile();
+	writeln("Getting Script Headers...");
+
+    string cApi_Id = "MA9m6em62bf-mLIJKvQgTekMLm9v2IJHf"; //TODO execution API ID	
+	string fetchUrl = "https://script.googleapis.com/v1/scripts/"~ cApi_Id ~":run";
+
+	string[] params = [scriptFileName];
+	if(fileId != null){
+		params ~= fileId;
+	}else{
+		params ~= "null";
+	}
+
+	JSONValue postData =  ["function":"GET", "devMode":"false"];
+	
+	postData.object["parameters"] = params;
+	auto http = HTTP(fetchUrl);	
+
+	http.setPostData(postData.toString(), "application/json");	
+	http.addRequestHeader("Authorization", "Bearer "~oAuthToken);
+
+    string retVal;
+	http.onReceive = (ubyte[] data)
+	{	retVal ~= cast(string)data;
+		return data.length;
+	};
+	http.perform();
+
+    JSONValue res = parseJSON(retVal);
+
+    if("error" in res){
+			try{writeln(res["error"].object["details"].array[0].object["errorMessage"].str());}
+			catch(Throwable e){writeln(e);writeln(res);}
+		}
+		if("response" in res){
+			writeln("done");
+			
+			JSONValue metaData = parseJSON(res["response"].object["result"].str()); //not sure how to copy object. used the Javascript parse trick.
+			
+			foreach(JSONValue mfo; metaData.object["files"].array()){ // just need the headerinfo
+				mfo.object.remove("source");
+			}
+				//writeln(metaData);
+				
+				if(!exists(dirName(tempDevFolder ~ "/" ~  scriptInfoName))){
+					mkdir(dirName(tempDevFolder ~ "/" ~  scriptInfoName));//possible I'll put a path on the scriptInfo}
+				}
+				std.file.write(tempDevFolder ~ "/" ~  scriptInfoName,to!string(metaData));
+				}
+				
+		}
+
+
+	
