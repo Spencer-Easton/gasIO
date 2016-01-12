@@ -214,6 +214,7 @@ JSONValue makeFilesObject(){
    string[string][] filesArray; // Array to hold the fileObjs
    foreach(file; dirFiles){
    	string shortName = file.name[2..$]; // remove the initial './';
+   	shortName = shortName.replace("\\","/"); // Don't let windows screw things up
    	if(std.path.extension(file.name) == ".gs"){ // strip off extensions the IDE pushes on
    		shortName = shortName[0..$-3];
    	}		
@@ -367,6 +368,7 @@ void GET(){
 			}
 			std.file.write(tempDevFolder ~ "/" ~  scriptInfoName,to!string(metaData));
 			foreach(JSONValue fo; scriptFile.object["files"].array()){
+			    fo.object["name"] = fo.object["name"].str().replace("\\", "/");
 			    string extension;
 			    if(!exists(dirName(tempDevFolder ~ "/"~fo.object["name"].str()))){
 			    	mkdirRecurse(dirName(tempDevFolder ~ "/"~fo.object["name"].str()));
