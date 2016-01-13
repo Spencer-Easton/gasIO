@@ -23,29 +23,26 @@ gasIO options
 -h         --help This help information.  
   
 ####Examples  
-//Download a project to your local machine.
-//Get the first script with the matching file name
-gasIO --get --fileName="myImportantScript"  
-or  
-gasIO -g -f"myImportantScript"  
-  
-//Get a script by ID  
-gasIO --get --fileId="1J7BFyyuCXyIXz0faFSLIkgcl_oCpgeRUXB7_p1Z-lPh2Mb"  
-or  
-gasIO -g -i"1J7BFyyuCXyIXz0faFSLIkgcl_oCpgeRUXB7_p1Z-lPh2Mb"  
-  
-//Upload a project to Drive  
-//Push a previously imported script back to Drive.  
-gasIO --push
 
-//Push a new project or copy local project on Drive 
-// --copy is also for a new project for now. I might change that later.
-gasIO --push --fileName="myNewProject"  --copy  
-or  
-gasIO -p -f"myNewProject" -c  
+    //Download a project to your local machine.  
+    //Get the first script with the matching file name
+    gasIO --get --fileName="myImportantScript"  //or
+    gasIO -g -f"myImportantScript"  
   
-//Push a project with all subfolders to Drive  
-//Add files of a non-default extension to the project
-gasIO --push --recurse --addExt="\*.md"  
-or  
-gasIO -p -r -a"\*.md"  
+    //Get a script by ID  
+    gasIO --get --fileId="1J7BFyyuCXyIXz0faFSLIkgcl_oCpgeRUXB7_p1Z-lPh2Mb"  //or  
+    gasIO -g -i"1J7BFyyuCXyIXz0faFSLIkgcl_oCpgeRUXB7_p1Z-lPh2Mb"  
+  
+    //Upload a project to Drive  
+    //Push a previously imported script back to Drive.  
+    gasIO --push
+
+    //Push a new project or copy local project on Drive 
+    // --copy is also for a new project for now. I might change that later.
+    gasIO --push --fileName="myNewProject"  --copy  //or   
+    gasIO -p -f"myNewProject" -c  
+  
+    //Push a project with all subfolders to Drive  
+    //Add files of a non-default extension to the project
+    gasIO --push --recurse --addExt="\*.md"  //or  
+    gasIO -p -r -a"\*.md"  
