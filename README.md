@@ -8,7 +8,7 @@ This has been tested on windows 7 x64 and OSX 10.10.
 
 I have purposfully left OAuth Client credentials in the source code. These are safe to use, but if you are worried about giving access to a public API you can publish the script in the src/server folder as an executable API and generate your own credentials. If you are interested in this tool I'm going to assume you know how to do this. A search for `TODO` in gasIO.d will show the lines where these values go.
 
-gasIO options  
+#####gasIO options  
 -f     --fileName The name of the file to be opened or saved   
 (default: push/Untitled Script  get/first script found with the given name )  
 -i       --fileId The File Id of the script you want to get or push  
@@ -22,7 +22,7 @@ gasIO options
 -t  --clearTokens Deletes all stored OAuth tokens  
 -h         --help This help information.  
   
-####Examples  
+#####Examples  
 
     //Download a project to your local machine.  
     //Get the first script with the matching file name
