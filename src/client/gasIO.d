@@ -311,8 +311,7 @@ void PUSH(){
 		}
 		
 		if("response" in res){
-			writeln("Updating " ~ scriptInfoName);
-			GETHEADERS();
+			writeln("done");
 			try{writeln(res["response"].object["result"].str());}
 			catch(Exception e){writeln(retVal);}
     	}

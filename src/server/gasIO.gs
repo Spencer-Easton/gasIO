@@ -1,34 +1,33 @@
-
-/*
-* Push Changes to a script
-*/
-function PUSH(scriptName, filesObject, scriptId,newFile) {
-  
-  if(scriptId === "null"){
-    if(!scriptName){
-      throw new Error("You must specify a script Id or File Name");
+function PUSH(scriptName, filesObject, scriptId,newFile){
+  if(newFile === "true"){ //were copying/creating
+    if(scriptName === ""){
+      throw new Error("You must specify a File Name");
     }else{
-      if(newFile === "true"){
-       Logger.log("try new file");
-         var newScript = createNewProject(scriptName,JSON.parse(filesObject),DriveApp.getRootFolder().getId());
-         scriptId = newScript.id; 
-      }else{
-        scriptId = getScriptId(scriptName);
+      var newScript = createNewProject(scriptName,JSON.parse(filesObject),DriveApp.getRootFolder().getId());
+      scriptId = newScript.id;   
+    }
+  }else{ // not a new file we're updating
+    if(scriptId === "null"){
+      if(scriptName === ""){
+        throw new Error("You must specify a File Name or File Id");
       }
+      scriptId = getScriptId(scriptName); 
+    }else{      
+       scriptName = DriveApp.getFolderById(scriptId).getName();      
+      //we now have the script Id and Script Name
+      try{updateFilesinScript(scriptId, filesObject);}
+      catch(e){throw Error(e)}
     }
   }
+   var returnString =  "Written to: "+ scriptName +". File Id: "+ scriptId;
+   if(newFile === "true"){
+     returnString += '.\nTo switch to your new projet locally use the command:\ngasIO --syncHeader --fileId="'+scriptId+'"';
+   }
+   return returnString;
   
-  
-  if(scriptId !== "null"){
-    scriptName = DriveApp.getFolderById(scriptId).getName();
-  }
-  
-  if(newFile !== "true"){
-    try{updateFilesinScript(scriptId, filesObject);}
-    catch(e){throw Error(e)}
-  }
-  return "Written to: "+ scriptName +". File Id: "+ scriptId;
 }
+  
+
 
 
 /*
