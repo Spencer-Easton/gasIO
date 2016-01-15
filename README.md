@@ -3,8 +3,8 @@
 The source for the client can be found in the src/client folder.  
 It can be compiled with the dmd compiler found at [http://dlang.org](http://dlang.org/download.html).  
 To compile use `dmd gasIO.d`. 
-This has been tested on windows 7 x64 and OSX 10.10.  
-######If you are running on windows you need to make sure you have libcurl.dll in your execution path. Also cmd.exe might insert spaces at line breaks when you copy the Autorization URL from the terminal window.  
+This has been tested on windows 7 x64, OSX 10.10, and debian 8
+######If you are running on windows you need to make sure you have cURL installed as libcurl.dll is required. Also your terminal client might insert spaces at line breaks when you copy the Autorization URL from the terminal window.  
 
 I have purposfully left OAuth Client credentials in the source code. These are safe to use, but if you are worried about giving access to a public API you can publish the script in the src/server folder as an executable API and generate your own credentials. If you are interested in this tool I'm going to assume you know how to do this. A search for `TODO` in gasIO.d will show the lines where these values go.
 
